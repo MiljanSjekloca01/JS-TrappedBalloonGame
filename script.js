@@ -1,5 +1,7 @@
 // Trenutno se igrica razlikuje za malo zbog razlicitih ekrana. ( balloon i trouglovi ) / po tezini
 // Moj Screen {  window.innerWidth - 1536 ,  window.innerHeight - 738 } 
+// Currently, the game differs slightly due to different screen sizes. (balloon and triangles) / in terms of difficulty
+// My Screen {  window.innerWidth - 1536 ,  window.innerHeight - 738 }
 
 let fps = 60;
 
@@ -13,7 +15,7 @@ var ctx = canvas.getContext("2d");
 // numberOfObstacles
 var numberOfObstacles = 0;
 
-//Trouglovi
+//Trouglovi Triangles
 const maximumGap = 450;
 const minimumGap = 120;
 let triangles = [];
@@ -60,7 +62,7 @@ function Component(name,value){
 
 let entities = [];
 
-// Balloon i njegove komponente
+// Balloon and its components
 entities.push(new Entity()
 .addComponent(new Component("position_x",200))
 .addComponent(new Component("position_y",0))
@@ -74,7 +76,7 @@ entities.push(new Entity()
 .addComponent(new Component("passedTriangles", []))
 );
 
-// Prepreke(Trouglovi) i njegove komponente
+// Prepreke(Trouglovi) i njegove komponente - Obstacles (Triangles) and Triangle components
 function generateTriangleEntity(x, h, color, triangleWidth, random) {
     return new Entity()
         .addComponent(new Component("x", x))
@@ -85,6 +87,7 @@ function generateTriangleEntity(x, h, color, triangleWidth, random) {
 }
 
 // Generisanje Entitiy componenti za trouglove.Sa x pozicijom,visinom,bojom...itd
+// Generating entities for triangles with x position, height, color, etc.
 
 function generateTriangles(numberOfTriangles) {
     let newEntities = []; 
@@ -97,10 +100,10 @@ function generateTriangles(numberOfTriangles) {
         else {
             x = newEntities[i - 1].components.x.value + minimumGap + Math.floor(Math.random() * (maximumGap - minimumGap));
         }
-        const h = 70 + Math.random() * 70; // dodati responsive za screen width height
+        const h = 70 + Math.random() * 70; // should be responsive
         const triangleColors = ["#cbd6d8", "#bdc4c5", "#909697"];
-        const color = triangleColors[Math.floor(Math.random() * 3)]; // 0 1 ili 2 boja
-        const triangleWidth = 80;   // napraviti responsive na screen width 
+        const color = triangleColors[Math.floor(Math.random() * 3)]; // 0 1 or 2 - color
+        const triangleWidth = 80;  // should be responsive
         var random = Math.floor(Math.random() * 2);
         newEntities.push(generateTriangleEntity(x, h, color, triangleWidth, random));
     }
@@ -108,6 +111,7 @@ function generateTriangles(numberOfTriangles) {
 }
 
 // Crtanje trouglova u canvasu.
+// Drawing triangles on the canvas.
 function drawTriangles() {
     entities.forEach(entity => {
     
@@ -143,8 +147,8 @@ function drawTriangles() {
     });
 }
 
-// Napraviti responsive sa ekranom
-// Crtanje Balona.
+// Should be responsive with screen
+// Crtanje Balona - Balloon Drawing
 function drawBalloon(e){
     ctx.save();
     ctx.translate(e.components.position_x.value,e.components.position_y.value);
@@ -162,7 +166,7 @@ function drawBalloon(e){
     ctx.moveTo(15,-15);
     ctx.lineTo(15,-30);
     ctx.stroke();
-    //Balon
+    //Balon Balloon
     ctx.fillStyle = "#D62828";
     ctx.beginPath();
     ctx.moveTo(-30,-30);
@@ -188,7 +192,8 @@ function drawBackground(){
   // 3. sirina   4. visina ( * 2 zato sto smo vec gore makli jedan vertical padding)
 }
 
-// funkcija za reset game prazni entitete i dodaje standardni pocetni entitet - balon.
+// Funkcija za reset game prazni entitete i dodaje standardni pocetni entitet - balon.
+// Function to reset the game, clearing entities and adding a standard initial entity - balloon.
 function resetGame() {
     entities = []; 
     entities.push(new Entity()
@@ -253,6 +258,7 @@ userInputSystem = (function inputSystem(){
         level_1Button.style.display = "none";
         level_2Button.style.display = "none";
         instruction.style.display = "none";
+        // Generating triangles based on the level
         // generisanje prepreka(trouglova) na osnovu levela.
         generateTriangles(numberOfObstacles);
     }
@@ -280,8 +286,8 @@ userInputSystem = (function inputSystem(){
     }
 })()
 
-// Graficki sistem 
-// Sistem iscrtavanja
+
+// Sistem iscrtavanja i Graficki sistem - Graphics and rendering system
 renderingSystem = (function graphicsSystem(){
     
     return(entities) =>{
@@ -310,7 +316,7 @@ heatingSoundSystem = function(entities){
                 e.components.heatingSound.value.volume = 0.1;
                 e.components.heatingSound.value.play();
             }else {
-                // zaustavljanje zvuka i povratak na pocetak
+                // zaustavljanje zvuka i povratak na pocetak - sound stop
                 e.components.heatingSound.value.pause();
                 // Postavi vrijeme na početak kako bi se zvuk ponovno pokrenuo od početka
                 e.components.heatingSound.value.currentTime = 0;
@@ -323,6 +329,7 @@ heatingSoundSystem = function(entities){
 }
 
 // Kretanje balona (samo u slucaju kada igra pocne i generisan je broj prepreka)
+// Balloon movement
 physicsSystem = function(entities){
     let newEntities = [];
 
@@ -330,18 +337,18 @@ physicsSystem = function(entities){
     for(e of entities){
         if( numberOfObstacles !== 0 && e.components.gameStarted !== undefined && e.components.gameStarted.value == true){
             if(e.components.heating.value == false){
-                //Maksimalna brzina pada
+                //Maksimalna brzina pada - Max fall speed
                 if(e.components.velocity_y.value < 5){
                     e.components.velocity_y.value += e.components.releasedVelocityY.value;
                 }
             }else if(e.components.velocity_y.value > -8){ // Max brzina podizanja
                 e.components.velocity_y.value -= e.components.pressedVelocityY.value;
             }
-            // Pomjeranje balloon-a po x i y osi
+            // Pomjeranje balloon-a po x i y osi - Movement x/y
             e.components.position_x.value += e.components.velocity_x.value;
             e.components.position_y.value += e.components.velocity_y.value;
             
-            // Maksimalna i Minimalna Y pozicija balona.
+            // Maksimalna i Minimalna Y pozicija balona - Max and Min y position
             if(e.components.position_y.value >= balloonBottomHitPoint){
                 e.components.position_y.value = balloonBottomHitPoint;
             }else if(e.components.position_y.value <= balloonTopHitPoint){
@@ -378,8 +385,8 @@ function sign(p1, p2, p3) {
 }
 
 
-// Sistem za detekciju kolizicije centra balona i njegovog radiusa sa tackama u trouglu
-// i korpe balona sa trouglovima.
+// Sistem za detekciju kolizicije centra balona i njegovog radiusa sa tackama u trouglu i korpe balona sa trouglovima.
+// System for collision detection
 collisionSystem = function (entities) {
     let newEntities = [];
     
