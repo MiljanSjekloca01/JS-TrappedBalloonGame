@@ -1,0 +1,110 @@
+* {
+    margin:0;
+    padding:0;
+    overflow: hidden;
+}
+
+body {
+
+    background-color: #3e2915;
+    height: 100%;
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#restart {
+    width: 10%;
+    height: 20%;
+    position:absolute;
+    border-radius: 50%;
+    color: white;
+    background-color: red;
+    border: none;
+    font-weight: 700;
+    font-size: 1.2em;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: none;
+    cursor:pointer;
+    
+   
+  }
+
+
+  #level_1,#level_2 {
+    width: 12%;
+    height: 60px;
+    border: 3px solid #cbd6d8;
+    border-radius: 1em;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2em;
+    cursor: default;
+    background-color: #444444;
+    position: absolute;
+    z-index: 2;
+}
+
+#level_1{
+    top: 15%;
+    left: 10%;
+}
+
+#level_2{
+    top: 15%;
+    left: 30%;
+}
+
+
+#instruction{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    color:white;
+    font-size: 2em;
+    top:40%;
+    left:50%;
+    opacity: 0.5;
+}
+
+#score{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    color:white;
+    font-size: 2em;
+    bottom:2.5%;
+    right:10%;
+    font-weight: bold;
+    
+}
+
+
+#gameName{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    color:white;
+    font-size: 1.5em;
+    top:2.5%;
+    left:10%;
+    font-weight: bold;
+    opacity: 0.8;
+    font-family: Georgia;
+}
+
+
+#level{
+    display: flex;
+    position:absolute;
+    z-index: 2;
+    color:white;
+    font-size: 1.5em;
+    top:2.5%;
+    right:10%;
+    font-weight: bold;
+}

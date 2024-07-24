@@ -1,0 +1,34 @@
+Zahtevi za projektni zadataku sledeci:
+
+
+Konstruisati entity-component-system (ECS) engine za video igrice u Javaskript programskom jeziku i realizovati jednostavan primer implementacije igrice u konstruisanom engine-u.
+ECS system mora da sadrzi sledece sisteme:
+  - Sistem za korisnicki interfejs (tastatura ii/ili mis i/ili unos teksta)
+  - Sistem za iscrtavanja (rendering)
+  - Sistem za vreme (Delta time)
+
+
+
+Projekat takodje treba da sadrzi najmanje dva (2) systema koje student sam definise za potrebe igrice koju implementira:
+  Npr:
+  - Sistem fizike za pticu
+  - Sistem za okretanje karata u igri memorije
+  - Sistem za AI protivnik
+
+
+
+Pri izradi projekta studenti treba da prikazu neke od osnovnih principa obradjenih na kursu funkcionalnog programiranja:
+- Upotreba funkcija viseg reda
+- Imutabilnost 
+- Primena map, filter, reduce funkcija
+- Primena vektora
+
+
+Bodovi se ostvaruje na odbrani, implementacijom trazene izmene u predlozenom projektnom resenju i odgovorima na teorijiska pitanja.
+
+
+
+// Dodati jos responsive za visinu sirinu trouglova.
+
+
+
